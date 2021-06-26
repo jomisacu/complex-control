@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Complex control example</title>
+	
+	<script src="src/ComplexControl.js"></script>
+	
+	<style>
+		.complex-control {
+			padding: 10px;
+			border: 2px solid grey;
+			margin: 10px;
+		}
+		
+		.content {
+			width: 900px;
+		}
+	</style>
+</head>
+<body>
+<div class="content">
+	
+	<form action="#" method="post" id="form" enctype="multipart/form-data">
+		<div class="complex-control">
+			Name: <input type="text" data-name="name" value="John Smith" /><br />
+			Age: <input type="number" data-name="age" value="441" /><br />
+			Job: <select data-name="job">
+			<option value="Soldier">Soldier</option>
+			<option value="Gentleman">Gentleman</option>
+			<option value="Plebeian">Plebeian</option>
+		</select><br />
+			Male<input type="radio" name="gender" value="male" data-name="gender" /><br />
+			Female<input type="radio" name="gender" value="female" data-name="gender" /><br />
+			Ready<input type="checkbox" value="ready" data-name="status" /><br>
+			Tired<input type="checkbox" value="tired" data-name="status" /><br>
+			Comfort<input type="checkbox" value="comfort" data-name="status" /><br>
+			Friends:
+			<div id="friends_list">
+				
+				<div class="complex-control">
+					Name: <input type="text" data-name="name" value="Lancelot" /><br />
+					Age: <input type="number" data-name="age" value="35" /><br />
+					Job: <select data-name="job">
+					<option value="Soldier">Soldier</option>
+					<option value="Gentleman">Gentleman</option>
+					<option value="Plebeian">Plebeian</option>
+				</select><br />
+					Friends:
+					<div>
+						<input type="text" data-name="friends" value="King Arthur" /><br />
+						<input type="text" data-name="friends" value="Merlin" /><br />
+						<input type="text" data-name="friends" value="John Smith" /><br />
+					</div>
+					<input type="hidden" class="complex-control-value" data-name="friends">
+				</div>
+				
+				
+				<div class="complex-control">
+					Name: <input type="text" data-name="name" value="King Arthur" /><br />
+					Age: <input type="number" data-name="age" value="36" /><br />
+					Job: <select data-name="job">
+					<option value="Soldier">Soldier</option>
+					<option value="Gentleman">Gentleman</option>
+					<option value="Plebeian">Plebeian</option>
+				</select><br />
+					Friends:
+					<div>
+						<input type="text" data-name="friends" value="Sir Lancelot" /><br />
+						<input type="text" data-name="friends" value="Merlin" /><br />
+					</div>
+					<input type="hidden" class="complex-control-value" data-name="friends">
+				</div>
+			
+			
+			</div>
+			<input type="hidden" class="complex-control-value" name="person" id="person">
+		</div>
+		<button>View the complex structure</button>
+		<button type="button" onclick="addOtherFriend()">Add other friend</button>
+	</form>
+	<div>
+		<br />
+		This is the value that will be sent to the server
+		<pre style="margin: 10px; border: 1px solid blue;padding: 10px;" id="complex_control_value_preview"></pre>
+	</div>
+</div>
+
+<script>
+	let p = document.getElementById('complex_control_value_preview');
+	let form = document.getElementById('form');
+	let ccv = document.getElementById('person');
+	
+	form.onsubmit = refreshPreview;
+	
+	function refreshPreview(e) {
+	    e.preventDefault();
+	    e.stopPropagation();
+	    
+	    console.log('refreshPreview...')
+	    ComplexControl.refresh();
+	    p.innerHTML = JSON.stringify(JSON.parse(ccv.value), null, 2);
+	}
+	
+	function addOtherFriend() {
+	    document.getElementById('friends_list').insertAdjacentHTML('beforeend', document.getElementById('friend_item_template').innerHTML);
+	}
+	
+	function elapsedTime(cb, times = 100) {
+	    let start = Date.now();
+	    
+	    for (let i = 0; i < times; i++) {
+	        cb();
+	    }
+	    
+	    return Date.now() - start;
+	}
+	
+</script>
+
+<script type="text/html" id="friend_item_template">
+	<div class="complex-control">
+		Name: <input type="text" data-name="name" value="" /><br />
+		Age: <input type="number" data-name="age" value="" /><br />
+		Friends:
+		<div>
+			<input type="text" data-name="friends" value="" /><br />
+			<input type="text" data-name="friends" value="" /><br />
+		</div>
+		<input type="hidden" class="complex-control-value" data-name="friends">
+	</div>
+</script>
+
+
+</body>
+</html>
