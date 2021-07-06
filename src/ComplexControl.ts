@@ -1,10 +1,12 @@
 class ComplexControl {
     private static ready = [];
 
-    public static refresh() {
+    public static refresh(scopeElement) {
+        scopeElement = scopeElement || document;
+
         this.resetProcessedItems();
-        this.removeExportedComplexControlValues();
-        this.refreshComplexControls();
+        this.removeExportedComplexControlValues(scopeElement);
+        this.refreshComplexControls(scopeElement);
         this.resetProcessedItems();
     }
 
@@ -12,12 +14,12 @@ class ComplexControl {
         this.ready = [];
     }
 
-    private static removeExportedComplexControlValues() {
-        document.querySelectorAll('.complex-control-value-exported').forEach(x => x.remove());
+    private static removeExportedComplexControlValues(scopedElement) {
+        scopedElement.querySelectorAll('.complex-control-value-exported').forEach(x => x.remove());
     }
 
-    private static refreshComplexControls() {
-        document.querySelectorAll('.complex-control').forEach(cc => this.refreshComplexControl(cc));
+    private static refreshComplexControls(scopedElement) {
+        scopedElement.querySelectorAll('.complex-control').forEach(cc => this.refreshComplexControl(cc));
     }
 
     private static refreshComplexControl(cc) {

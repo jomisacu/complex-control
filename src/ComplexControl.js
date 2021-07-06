@@ -1,21 +1,22 @@
 var ComplexControl = (function () {
     function ComplexControl() {
     }
-    ComplexControl.refresh = function () {
+    ComplexControl.refresh = function (scopeElement) {
+        scopeElement = scopeElement || document;
         this.resetProcessedItems();
-        this.removeExportedComplexControlValues();
-        this.refreshComplexControls();
+        this.removeExportedComplexControlValues(scopeElement);
+        this.refreshComplexControls(scopeElement);
         this.resetProcessedItems();
     };
     ComplexControl.resetProcessedItems = function () {
         this.ready = [];
     };
-    ComplexControl.removeExportedComplexControlValues = function () {
-        document.querySelectorAll('.complex-control-value-exported').forEach(function (x) { return x.remove(); });
+    ComplexControl.removeExportedComplexControlValues = function (scopedElement) {
+        scopedElement.querySelectorAll('.complex-control-value-exported').forEach(function (x) { return x.remove(); });
     };
-    ComplexControl.refreshComplexControls = function () {
+    ComplexControl.refreshComplexControls = function (scopedElement) {
         var _this = this;
-        document.querySelectorAll('.complex-control').forEach(function (cc) { return _this.refreshComplexControl(cc); });
+        scopedElement.querySelectorAll('.complex-control').forEach(function (cc) { return _this.refreshComplexControl(cc); });
     };
     ComplexControl.refreshComplexControl = function (cc) {
         var _this = this;
