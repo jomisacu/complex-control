@@ -105,17 +105,24 @@ class ComplexControl {
 
             if (fieldValue === undefined) continue;
 
-            if (data[field.dataset.name] === undefined) {
-                data[field.dataset.name] = fieldValue;
-            } else {
-                if (Array.isArray(data[field.dataset.name]) === false) {
-                    let previous = data[field.dataset.name];
+            let fieldName = field.dataset.name,
+                isArray = false;
 
-                    data[field.dataset.name] = [];
-                    data[field.dataset.name].push(previous);
+            if (field.dataset.name.indexOf('[') !== -1) {
+                fieldName = field.dataset.name.replace(/\[|\]/g, '');
+                isArray = true;
+            }
+
+            if (data[fieldName] === undefined) {
+                if (isArray) {
+                    data[fieldName] = [];
                 }
+            }
 
-                data[field.dataset.name].push(fieldValue);
+            if (isArray) {
+                data[fieldName].push(fieldValue)
+            } else {
+                data[fieldName] = fieldValue;
             }
         }
 

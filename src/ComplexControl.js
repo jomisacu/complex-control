@@ -80,16 +80,21 @@ var ComplexControl = (function () {
             var fieldValue = this.getFieldValue(field);
             if (fieldValue === undefined)
                 continue;
-            if (data[field.dataset.name] === undefined) {
-                data[field.dataset.name] = fieldValue;
+            var fieldName = field.dataset.name, isArray = false;
+            if (field.dataset.name.indexOf('[') !== -1) {
+                fieldName = field.dataset.name.replace('\[|\]', '');
+                isArray = true;
+            }
+            if (data[fieldName] === undefined) {
+                if (isArray) {
+                    data[fieldName] = [];
+                }
+            }
+            if (isArray) {
+                data[fieldName].push(fieldValue);
             }
             else {
-                if (Array.isArray(data[field.dataset.name]) === false) {
-                    var previous = data[field.dataset.name];
-                    data[field.dataset.name] = [];
-                    data[field.dataset.name].push(previous);
-                }
-                data[field.dataset.name].push(fieldValue);
+                data[fieldName] = fieldValue;
             }
         }
         return data;
