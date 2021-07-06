@@ -94,12 +94,6 @@ var ComplexControl = (function () {
         return data;
     };
     ComplexControl.getFieldValue = function (field) {
-        if (field.type === 'textarea') {
-            return field.innerText;
-        }
-        if (field.type === 'select') {
-            return field[field.selectedIndex];
-        }
         if (field.type === 'checkbox' || field.type === 'radio') {
             if (!field.checked) {
                 return undefined;
