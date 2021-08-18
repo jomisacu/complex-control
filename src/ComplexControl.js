@@ -82,7 +82,7 @@ var ComplexControl = (function () {
                 continue;
             var fieldName = field.dataset.name, isArray = false;
             if (field.dataset.name.indexOf('[') !== -1) {
-                fieldName = field.dataset.name.replace('\[|\]', '');
+                fieldName = field.dataset.name.replace(/(\[.*\])/g, '');
                 isArray = true;
             }
             if (data[fieldName] === undefined) {
