@@ -138,6 +138,14 @@ class ComplexControl {
             return field.value;
         }
 
+        if (field.type === 'select-multiple') {
+            let value = [];
+
+            [...field.selectedOptions].map(option => value.push(option.value));
+
+            return value;
+        }
+
         if (field.classList.contains('complex-control-value')) {
             return undefined;
         }

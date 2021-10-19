@@ -1,4 +1,9 @@
-var ComplexControl = (function () {
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
+var ComplexControl = /** @class */ (function () {
     function ComplexControl() {
     }
     ComplexControl.refresh = function (scopeElement) {
@@ -73,8 +78,8 @@ var ComplexControl = (function () {
     };
     ComplexControl.formatComplexControlJsonData = function (fields) {
         var data = {};
-        for (var _i = 0; _i < fields.length; _i++) {
-            var field = fields[_i];
+        for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
+            var field = fields_1[_i];
             if (field.dataset.name === undefined)
                 continue;
             var fieldValue = this.getFieldValue(field);
@@ -106,6 +111,11 @@ var ComplexControl = (function () {
             }
             return field.value;
         }
+        if (field.type === 'select-multiple') {
+            var value_1 = [];
+            __spreadArray([], field.selectedOptions).map(function (option) { return value_1.push(option.value); });
+            return value_1;
+        }
         if (field.classList.contains('complex-control-value')) {
             return undefined;
         }
@@ -118,4 +128,4 @@ var ComplexControl = (function () {
     };
     ComplexControl.ready = [];
     return ComplexControl;
-})();
+}());
