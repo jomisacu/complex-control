@@ -1,4 +1,4 @@
-class ComplexControl {
+export class ComplexControl {
     private static ready = [];
 
     public static refresh(scopeElement) {
